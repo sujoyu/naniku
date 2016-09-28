@@ -58,7 +58,7 @@ function initMap() {
 
   document.getElementById('search').addEventListener('submit', function(e) {
     e.preventDefault();
-    Materialize.toast("検索を開始...", 2000);
+    Materialize.toast("検索開始...", 1000);
 
     infowindow.close();
     markers.forEach(function(marker) {
@@ -108,6 +108,7 @@ function initMap() {
 
           markers.push(marker);
         });
+        Materialize.toast("検索完了", 1000);
       } else {
         var msg = errorMessages[status];
         Materialize.toast(msg, 3000);
