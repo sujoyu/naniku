@@ -8,6 +8,17 @@ function initMap() {
   var latLng;
   var markers = [];
   var infowindow;
+  var types = ['restaurant', 'food', 'cafe', 'bar'];
+
+  var errorMessages = {
+    ERROR: 'Google サーバーへの接続で問題が発生しました。',
+    INVALID_REQUEST: 'リクエストが無効です。',
+    OVER_QUERY_LIMIT: 'リクエスト割り当て数を超過しました。',
+    REQUEST_DENIED: 'PlacesService を利用できません。',
+    UNKNOWN_ERROR: 'リクエストを処理できませんでした。再度リクエストすると、成功する可能性があります。',
+    ZERO_RESULTS: '結果は0件です。'
+  }
+
   navigator.geolocation.getCurrentPosition(function(position) {
     var geolocation = {
       lat: position.coords.latitude,
@@ -30,18 +41,13 @@ function initMap() {
       title: '現在地'
     });
 
-    var defaultBounds = new google.maps.LatLngBounds(latLng);
+    // var input = document.getElementById('search-field');
+    // var options = {
+    //   bounds: circle.getBounds(),
+    //   types: ['establishment']
+    // };
 
-    var input = document.getElementById('search-field');
-    var options = {
-      location: latLng,
-      radius: '500',
-      types: ['restaurant', 'food', 'cafe']
-    };
-
-    autocomplete = new google.maps.places.Autocomplete(input, options);
-
-    autocomplete.setBounds(circle.getBounds());
+    // autocomplete = new google.maps.places.Autocomplete(input, options);
 
     infowindow = new google.maps.InfoWindow({
       pixelOffset: new google.maps.Size(-25, 0)
@@ -52,6 +58,7 @@ function initMap() {
 
   document.getElementById('search').addEventListener('submit', function(e) {
     e.preventDefault();
+    Materialize.toast("検索を開始...", 2000);
 
     infowindow.close();
     markers.forEach(function(marker) {
@@ -64,7 +71,7 @@ function initMap() {
       location: latLng,
       radius: document.getElementById('radius-field').value,
       keyword: document.getElementById('search-field').value,
-      type: ['restaurant', 'food', 'cafe'],
+      type: types,
       opennow: !!checkOpenNow.checked
     }, function(results, status) {
       if (status == google.maps.places.PlacesServiceStatus.OK) {
@@ -101,6 +108,9 @@ function initMap() {
 
           markers.push(marker);
         });
+      } else {
+        var msg = errorMessages[status];
+        Materialize.toast(msg, 3000);
       }
     });
   });
