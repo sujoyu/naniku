@@ -36,11 +36,13 @@
             </select>
             <label>なに食う？</label>
           </div>
-          <div class="input-field col s6 m6 l4">
-            <input type="text" id="radius-field" value="500"></input>
-            <label class="active" for="radius-field">半径◯メートル以内</label>
+          <div class="input-field col s6 m6 l3">
+            <p class="range-field">
+              <input type="range" id="radius-field" min="100" max="3000" value="500" />
+            </p>
+            <label class="active" for="radius-field">半径 <span id="radius-meter"></span> メートル以内</label>
           </div>
-          <div id="submit-wrapper" class="col s6 m6 l3">
+          <div id="submit-wrapper" class="col s6 m6 l4">
             <button id="search-submit" type="submit" class="right waves-effect waves-light btn">検索</button>
             <button id="search-random" type="submit" class="right waves-effect waves-light btn lime">ランダム</button>
           </div>

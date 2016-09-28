@@ -7,13 +7,14 @@ window.addEventListener('load', function() {
   var options = category.options;
   var searchField = document.getElementById('search-field');
   searchField.value = "";
+  var searchSubmit = document.getElementById('search-submit');
 
   randomize();
 
   document.getElementById('search-random').addEventListener('click', function(e) {
     e.preventDefault();
     randomize();
-    document.getElementById('search-submit').click();
+    searchSubmit.click();
   });
 
   searchField.addEventListener('keyup', function() {
@@ -28,8 +29,19 @@ window.addEventListener('load', function() {
 
   document.getElementById('option-form').addEventListener('submit', function(e) {
     e.preventDefault();
-    document.getElementById('search-submit').click();
-  })
+    searchSubmit.click();
+  });
+
+  $(category).on('change', function() {
+    searchSubmit.click();
+  });
+
+  var radiusMeter = document.getElementById('radius-meter');
+  var radiusField = document.getElementById('radius-field');
+  radiusField.addEventListener('change', function(e) {
+    radiusMeter.textContent = this.value;
+  });
+  radiusMeter.textContent = radiusField.value;
 
   function randomize() {
     var index = Math.floor(Math.random() * options.length);
@@ -67,7 +79,6 @@ function initMap() {
       marker.setMap(null);
     });
     markers = [];
-    console.log(checkOpenNow.checked);
 
     service = new google.maps.places.PlacesService(map);
     service.nearbySearch({
@@ -75,7 +86,7 @@ function initMap() {
       radius: document.getElementById('radius-field').value,
       keyword: document.getElementById('search-field').value || document.getElementById('category-field').value,
       type: types,
-      opennow: !!checkOpenNow.checked
+      openNow: !!checkOpenNow.checked
     }, function(results, status) {
       if (status == google.maps.places.PlacesServiceStatus.OK) {
         results.forEach(function(place) {
@@ -96,22 +107,29 @@ function initMap() {
 
           marker.addListener('click', function() {
             infowindow.close();
-            service.getDetails({
-              placeId: place.place_id
-            }, function(place, status) {
-              if (status == google.maps.places.PlacesServiceStatus.OK) {
-                var content = '<div><a href="' + place.url + '"><strong>' +
-                  place.name + '</strong></a><br>' +
-                  place.vicinity + '</div>'
-                infowindow.setContent(content);
-                infowindow.open(marker.getMap(), marker);
-              }
-            });
+            var content = '<div><a href="' + place.url + '" target="_blank"><img style="float: left; margin: 5px" src="' +
+            place.photos[0].getUrl({'maxWidth': 50, 'maxHeight': 50}) + '"></img><strong>' +
+              place.name + '</strong></a><br>' +
+              '評価: ' + (place.rating || "なし")  + '</div>'
+            infowindow.setContent(content);
+            infowindow.open(marker.getMap(), marker);
+
+            // service.getDetails({
+            //   placeId: place.place_id
+            // }, function(place, status) {
+            //   if (status == google.maps.places.PlacesServiceStatus.OK) {
+            //     var content = '<div><a href="' + place.url + '" target="_blank"><strong>' +
+            //       place.name + '</strong></a><br>' +
+            //       place.vicinity + '</div>'
+            //     infowindow.setContent(content);
+            //     infowindow.open(marker.getMap(), marker);
+            //   }
+            // });
           });
 
           markers.push(marker);
         });
-        Materialize.toast("検索完了", 1000);
+        Materialize.toast("検索完了。", 1000);
       } else {
         var msg = errorMessages[status];
         Materialize.toast(msg, 3000);
