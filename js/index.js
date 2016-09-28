@@ -24,6 +24,11 @@ window.addEventListener('load', function() {
       category.disabled = true;
       $(category).material_select();
     }
+  });
+
+  document.getElementById('option-form').addEventListener('submit', function(e) {
+    e.preventDefault();
+    document.getElementById('search-submit').click();
   })
 
   function randomize() {
