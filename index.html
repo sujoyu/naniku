@@ -16,18 +16,33 @@
   </head>
   <body>
     <div class="row" id="search-wrapper">
-      <form id="search" class="col s12 m6 offset-m3">
+      <form id="search" class="col s12 m6 offset-m1">
         <div id="search-panel" class="card-panel row">
           <div class="input-field col s12 m12 l5">
-              <input placeholder="キーワードを入力" id="search-field" type="text">
-              <label for="search-field">キーワード</label>
+            <select id="category-field">
+              <option value="和食">和食</option>
+              <option value="中華">中華</option>
+              <option value="イタリアン">イタリアン</option>
+              <option value="洋食">洋食</option>
+              <option value="ハンバーグ">ハンバーグ</option>
+              <option value="寿司">寿司</option>
+              <option value="カレー">カレー</option>
+              <option value="創作料理">創作料理</option>
+              <option value="フレンチ">フレンチ</option>
+              <option value="居酒屋">居酒屋</option>
+              <option value="ファミレス">ファミレス</option>
+              <option value="牛丼">牛丼</option>
+              <option value="ハンバーガー">ハンバーガー</option>
+            </select>
+            <label>なに食う？</label>
           </div>
           <div class="input-field col s6 m6 l4">
             <input type="text" id="radius-field" value="500"></input>
-            <label class="active" for="search-field">半径◯メートル以内</label>
+            <label class="active" for="radius-field">半径◯メートル以内</label>
           </div>
           <div id="submit-wrapper" class="col s6 m6 l3">
-            <button type="submit" class="right waves-effect waves-light btn">検索</button>
+            <button id="search-submit" type="submit" class="right waves-effect waves-light btn">検索</button>
+            <button id="search-random" type="submit" class="right waves-effect waves-light btn lime">ランダム</button>
           </div>
         </div>
       </form>
@@ -35,7 +50,11 @@
         <ul id="option-accordion" class="collapsible" data-collapsible="accordion">
           <li>
             <div class="collapsible-header teal-text">検索オプション</div>
-            <div id="option-body" class="collapsible-body white"><form>
+            <div id="option-body" class="collapsible-body white"><form class="row">
+              <div class="input-field col s12">
+                <input placeholder="キーワード" id="search-field" type="text">
+                <label for="search-field">キーワード</label>
+              </div>
               <div class="switch">
                 <label>
                   <input id="check-open-now" type="checkbox" checked>

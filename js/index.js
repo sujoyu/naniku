@@ -1,5 +1,37 @@
 window.addEventListener('load', function() {
   Materialize.updateTextFields();
+  $('select').material_select();
+
+  var category = document.getElementById('category-field');
+  category.disabled = false;
+  var options = category.options;
+  var searchField = document.getElementById('search-field');
+  searchField.value = "";
+
+  randomize();
+
+  document.getElementById('search-random').addEventListener('click', function(e) {
+    e.preventDefault();
+    randomize();
+    document.getElementById('search-submit').click();
+  });
+
+  searchField.addEventListener('keyup', function() {
+    if (this.value === "" && category.disabled) {
+      category.disabled = false;
+      $(category).material_select();
+    } else if (this.value !== "" && !category.disabled) {
+      category.disabled = true;
+      $(category).material_select();
+    }
+  })
+
+  function randomize() {
+    var index = Math.floor(Math.random() * options.length);
+    //for (var i = 0; i < options.length; i++) delete options[i].selected;
+    options[index].selected = true;
+    $(category).material_select();
+  }
 });
 
 function initMap() {
@@ -19,41 +51,6 @@ function initMap() {
     ZERO_RESULTS: '結果は0件です。'
   }
 
-  navigator.geolocation.getCurrentPosition(function(position) {
-    var geolocation = {
-      lat: position.coords.latitude,
-      lng: position.coords.longitude
-    };
-    latLng = new google.maps.LatLng(position.coords.latitude, position.coords.longitude);
-    var circle = new google.maps.Circle({
-      center: geolocation,
-      radius: position.coords.accuracy
-    });
-
-    map = new google.maps.Map(document.getElementById('map'), {
-      center: geolocation,
-      zoom: 16
-    });
-
-    var marker = new google.maps.Marker({
-      position: latLng,
-      map: map,
-      title: '現在地'
-    });
-
-    // var input = document.getElementById('search-field');
-    // var options = {
-    //   bounds: circle.getBounds(),
-    //   types: ['establishment']
-    // };
-
-    // autocomplete = new google.maps.places.Autocomplete(input, options);
-
-    infowindow = new google.maps.InfoWindow({
-      pixelOffset: new google.maps.Size(-25, 0)
-    });
-  });
-
   var checkOpenNow = document.getElementById('check-open-now');
 
   document.getElementById('search').addEventListener('submit', function(e) {
@@ -65,12 +62,13 @@ function initMap() {
       marker.setMap(null);
     });
     markers = [];
+    console.log(checkOpenNow.checked);
 
     service = new google.maps.places.PlacesService(map);
     service.nearbySearch({
       location: latLng,
       radius: document.getElementById('radius-field').value,
-      keyword: document.getElementById('search-field').value,
+      keyword: document.getElementById('search-field').value || document.getElementById('category-field').value,
       type: types,
       opennow: !!checkOpenNow.checked
     }, function(results, status) {
@@ -114,5 +112,41 @@ function initMap() {
         Materialize.toast(msg, 3000);
       }
     });
+  });
+
+  navigator.geolocation.getCurrentPosition(function(position) {
+    var geolocation = {
+      lat: position.coords.latitude,
+      lng: position.coords.longitude
+    };
+    latLng = new google.maps.LatLng(position.coords.latitude, position.coords.longitude);
+    var circle = new google.maps.Circle({
+      center: geolocation,
+      radius: position.coords.accuracy
+    });
+
+    map = new google.maps.Map(document.getElementById('map'), {
+      center: geolocation,
+      zoom: 16
+    });
+
+    var marker = new google.maps.Marker({
+      position: latLng,
+      map: map,
+      title: '現在地'
+    });
+
+    // var input = document.getElementById('search-field');
+    // var options = {
+    //   bounds: circle.getBounds(),
+    //   types: ['establishment']
+    // };
+
+    // autocomplete = new google.maps.places.Autocomplete(input, options);
+
+    infowindow = new google.maps.InfoWindow({
+      pixelOffset: new google.maps.Size(-25, 0)
+    });
+    document.getElementById('search-submit').click();
   });
 }

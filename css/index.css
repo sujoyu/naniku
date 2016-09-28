@@ -15,7 +15,10 @@ html, body { height: 100%; margin: 0; padding: 0; }
 	pointer-events: auto;
 }
 #submit-wrapper {
-	padding-top: 20px;
+	padding-top: 0;
+}
+#search-submit {
+	margin-bottom: 10px;
 }
 #option-accordion {
 	pointer-events: auto;
