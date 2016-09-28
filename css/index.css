@@ -1,0 +1,25 @@
+html, body { height: 100%; margin: 0; padding: 0; }
+#map { height: 100%; }
+#search-wrapper {
+	position: absolute;
+	top: 20px;
+	left: 0;
+	right: 0;
+	bottom: 0;
+	margin: 0 auto;
+	z-index: 1;
+	pointer-events: none;
+}
+#search-panel {
+	padding: 10px 20px;
+	pointer-events: auto;
+}
+#submit-wrapper {
+	padding-top: 20px;
+}
+#option-accordion {
+	pointer-events: auto;
+}
+#option-body {
+	padding: 15px 15px;
+}
