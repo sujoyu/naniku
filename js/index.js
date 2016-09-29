@@ -75,6 +75,7 @@ function initMap() {
     Materialize.toast("検索開始...", 1000);
 
     infowindow.close();
+
     markers.forEach(function(marker) {
       marker.setMap(null);
     });
@@ -107,7 +108,6 @@ function initMap() {
 
           marker.addListener('click', function() {
             infowindow.close();
-            map.panTo(place.geometry.location);
 
             var imgTag = place.photos && place.photos[0] ? '<img class="popup-image" src="' +
               place.photos[0].getUrl({'maxWidth': 100, 'maxHeight': 100}) + '"></img>' : '';
@@ -142,6 +142,8 @@ function initMap() {
         var msg = errorMessages[status];
         Materialize.toast(msg, 3000);
       }
+
+      offsetCenter(latLng, 0, -100);
     });
   });
 
@@ -172,4 +174,28 @@ function initMap() {
     });
     document.getElementById('search-submit').click();
   });
+
+  function offsetCenter(latlng, offsetx, offsety) {
+
+    // latlng is the apparent centre-point
+    // offsetx is the distance you want that point to move to the right, in pixels
+    // offsety is the distance you want that point to move upwards, in pixels
+    // offset can be negative
+    // offsetx and offsety are both optional
+
+    var scale = Math.pow(2, map.getZoom());
+
+    var worldCoordinateCenter = map.getProjection().fromLatLngToPoint(latlng);
+    var pixelOffset = new google.maps.Point((offsetx/scale) || 0,(offsety/scale) ||0);
+
+    var worldCoordinateNewCenter = new google.maps.Point(
+        worldCoordinateCenter.x - pixelOffset.x,
+        worldCoordinateCenter.y + pixelOffset.y
+    );
+
+    var newCenter = map.getProjection().fromPointToLatLng(worldCoordinateNewCenter);
+
+    map.panTo(newCenter);
+
+  }
 }
