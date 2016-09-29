@@ -70,7 +70,7 @@ function initMap() {
 
   var checkOpenNow = document.getElementById('check-open-now');
 
-  document.getElementById('search').addEventListener('submit', function(e) {
+  document.getElementById('option-form').addEventListener('submit', function(e) {
     e.preventDefault();
     Materialize.toast("検索開始...", 1000);
 
@@ -133,7 +133,6 @@ function initMap() {
               var content = '<div class="info-window-contents"><a href="' + place.url + '" target="_blank">' + imgTag + '<h6>' +
                 place.name + '</h6></a><br>' +
                 '<span class="popup-rating">評価: ' + (ratingStars || "なし")  + '</span><br></div>';
-              console.log(place);
               infowindow.setContent(content);
               infowindow.open(marker.getMap(), marker);
             } else {
