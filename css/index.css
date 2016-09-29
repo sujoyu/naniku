@@ -11,7 +11,7 @@ html, body { height: 100%; margin: 0; padding: 0; }
 	pointer-events: none;
 }
 #search-panel {
-	padding: 10px 20px;
+	padding: 10px 10px;
 	pointer-events: auto;
 }
 #search-panel .select-dropdown {
@@ -21,7 +21,7 @@ html, body { height: 100%; margin: 0; padding: 0; }
 	padding-top: 0;
 }
 #search-random {
-	margin-top: 20px;
+	margin-top: 15px;
 }
 #search-submit {
 	margin-bottom: 10px;
@@ -32,7 +32,7 @@ html, body { height: 100%; margin: 0; padding: 0; }
 #option-body {
 	padding: 15px 15px;
 }
-#search-gurnavi {
+#search-gurnavi, #search-random{
 	padding: 0 1rem;
 }
 #map-spinner-wrapper {
