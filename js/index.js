@@ -109,30 +109,38 @@ function initMap() {
           marker.addListener('click', function() {
             infowindow.close();
 
-            var imgTag = place.photos && place.photos[0] ? '<img class="popup-image" src="' +
-              place.photos[0].getUrl({'maxWidth': 100, 'maxHeight': 100}) + '"></img>' : '';
+            service.getDetails({
+              placeId: place.place_id
+            }, function(place, status) {
+              if (status == google.maps.places.PlacesServiceStatus.OK) {
+              var imgTag = place.photos && place.photos[0] ? '<img class="popup-image" src="' +
+                place.photos[0].getUrl({'maxWidth': 100, 'maxHeight': 100}) + '"></img>' : '';
 
-              var ratingStars;
-              if (place.rating) {
-                console.log(place.rating);
-                //var starKinds = ['0.0', '1.0', '2.0', '3.0', '3.5', '4.0', '4.5', '5.0'];
-                var stars = Array.from({length: 5}, function(v, k) { return k }).map(function(kind) {
-                  kind += 1;
-                  var icon;
-                  var rating = parseFloat(place.rating);
-                  if (kind <= rating) icon = 'star';
-                  else if (kind <= rating + 0.5) icon = 'star_half';
-                  else icon = 'star_border';
-                  return '<i class="material-icons orange-text">' + icon + '</i>'
-                });
-                var ratingStars = stars.join('');
-              }
+                var ratingStars;
+                if (place.rating) {
+                  var stars = Array.from({length: 5}, function(v, k) { return k }).map(function(kind) {
+                    kind += 1;
+                    var icon;
+                    var rating = parseFloat(place.rating);
+                    if (kind <= rating) icon = 'star';
+                    else if (kind <= rating + 0.5) icon = 'star_half';
+                    else icon = 'star_border';
+                    return '<i class="material-icons orange-text">' + icon + '</i>'
+                  });
+                  var ratingStars = stars.join('');
+                }
 
-            var content = '<div class="info-window-contents"><a href="' + place.url + '" target="_blank">' + imgTag + '<h6>' +
-              place.name + '</h6></a><br>' +
-              '<span class="popup-rating">評価: ' + (ratingStars || "なし")  + '</span></div>';
-            infowindow.setContent(content);
-            infowindow.open(marker.getMap(), marker);
+              var content = '<div class="info-window-contents"><a href="' + place.url + '" target="_blank">' + imgTag + '<h6>' +
+                place.name + '</h6></a><br>' +
+                '<span class="popup-rating">評価: ' + (ratingStars || "なし")  + '</span><br></div>';
+              console.log(place);
+              infowindow.setContent(content);
+              infowindow.open(marker.getMap(), marker);
+            } else {
+              var msg = errorMessages[status];
+              Materialize.toast(msg, 3000);
+            }
+          });
           });
 
           markers.push(marker);
