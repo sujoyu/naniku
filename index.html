@@ -19,7 +19,7 @@
     <div class="row" id="search-wrapper">
       <form id="search" class="col s12 m6 offset-m1">
         <div id="search-panel" class="card-panel row">
-          <div class="input-field col s12 m12 l5">
+          <div class="input-field col s5 m5 l8">
             <select id="category-field">
             <optgroup label="カテゴリ">
               <option value="和食">和食</option>
@@ -51,45 +51,45 @@
             </select>
             <label>なに食う？</label>
           </div>
-          <div class="input-field col s5 m5 l3">
-            <p class="range-field">
-              <input type="range" id="radius-field" min="100" max="3000" step="100" value="500" />
-            </p>
-            <label class="active" for="radius-field">半径 <span id="radius-meter"></span> m以内</label>
-          </div>
           <div id="submit-wrapper" class="col s7 m7 l4">
-            <button id="search-submit" type="submit" class="right waves-effect waves-light btn">検索</button>
             <button id="search-random" type="submit" class="right waves-effect waves-light btn amber">よしなに</button>
           </div>
         </div>
       </form>
-      <div class="col s6 m3">
+      <div id="option-wrapper" class="col s8 m4">
         <ul id="option-accordion" class="collapsible" data-collapsible="accordion">
           <li>
-            <div class="collapsible-header teal-text">検索オプション</div>
+            <div id="option-header" class="collapsible-header teal-text">検索オプション</div>
             <div id="option-body" class="collapsible-body white">
               <form id="option-form" class="row">
                 <div class="input-field col s12">
-                  <input placeholder="キーワード" id="search-field" type="text">
-                  <label for="search-field">キーワード</label>
+                  <input placeholder="例: きのこ料理" id="search-field" type="text">
+                  <label for="search-field">キーワード検索</label>
                 </div>
-                <div class="switch">
-                  <label>
+                <div class="input-field col s12">
+                  <div class="range-field">
+                    <input type="range" id="radius-field" min="100" max="3000" step="100" value="500" />
+                  </div>
+                  <label class="active" for="radius-field">半径 <span id="radius-meter"></span> m以内</label>
+                </div>
+                <div class="switch col s12">
+                  <label class="center-align">
                     <input id="check-open-now" type="checkbox" checked>
-                    <span class="lever"></span>
-                    現在営業中の店舗
+                    現在営業中の店舗 <span class="lever"></span>
                   </label>
                 </div>
               </form>
               <div class="row">
                 <div class="col s12">
+                  <button id="search-submit" type="submit" class="right waves-effect waves-light btn">検索</button>
+                </div>
+              </div>
+              <div class="row">
+                <div class="col s12">
                   同じ条件で、
                 </div>
                 <p class="col s12">
-                  <a id="search-tabelog" class="" href="#" target="_blank">食べログ検索</a>
-                </p>
-                <p class="col s12">
-                  <a id="search-gurnavi" class="" href="#" target="_blank">ぐるなび検索</a>
+                  <a id="search-gurnavi" class="right waves-effect waves-light btn deep-orange lighten-1" href="#" target="_blank">ぐるなび検索</a>
                 </p>
               </div>
             </div>

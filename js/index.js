@@ -189,12 +189,12 @@ function initMap() {
         '&fw=' + (document.getElementById('search-field').value || document.getElementById('category-field').value);
     });
 
-    document.getElementById('search-tabelog').addEventListener('click', function(e) {
-      this.href = 'https://tabelog.com/rst/rstmap' +
-        '?clat=' + geolocation.lat + '&clon=' + geolocation.lng +
-        '&lz=1' +
-        '&sw=' + (document.getElementById('search-field').value || document.getElementById('category-field').value);
-    });
+    // document.getElementById('search-tabelog').addEventListener('click', function(e) {
+    //   this.href = 'https://tabelog.com/rst/rstmap' +
+    //     '?clat=' + geolocation.lat + '&clon=' + geolocation.lng +
+    //     '&lz=1' +
+    //     '&sw=' + (document.getElementById('search-field').value || document.getElementById('category-field').value);
+    // });
   });
 
   function offsetCenter(latlng, offsetx, offsety) {
