@@ -2,7 +2,7 @@ html, body { height: 100%; margin: 0; padding: 0; }
 #map { height: 100%; }
 #search-wrapper {
 	position: absolute;
-	top: 20px;
+	top: 10px;
 	left: 0;
 	right: 0;
 	bottom: 0;
@@ -32,4 +32,22 @@ html, body { height: 100%; margin: 0; padding: 0; }
 }
 #map-spinner-wrapper .valign {
 	margin: auto;
+}
+.popup-image {
+	float: left;
+	margin: 5px 10px 5px 5px;
+}
+.info-window-contents h6 {
+	display: inline-block;
+	min-width: 7rem;
+}
+.popup-rating {
+	font-size: smaller;
+}
+.popup-rating .material-icons {
+	font-size: 1rem;
+
+}
+.rating-stars {
+
 }

@@ -107,24 +107,32 @@ function initMap() {
 
           marker.addListener('click', function() {
             infowindow.close();
-            var content = '<div><a href="' + place.url + '" target="_blank"><img style="float: left; margin: 5px" src="' +
-            place.photos[0].getUrl({'maxWidth': 50, 'maxHeight': 50}) + '"></img><strong>' +
-              place.name + '</strong></a><br>' +
-              '評価: ' + (place.rating || "なし")  + '</div>'
+            map.panTo(place.geometry.location);
+
+            var imgTag = place.photos && place.photos[0] ? '<img class="popup-image" src="' +
+              place.photos[0].getUrl({'maxWidth': 100, 'maxHeight': 100}) + '"></img>' : '';
+
+              var ratingStars;
+              if (place.rating) {
+                console.log(place.rating);
+                //var starKinds = ['0.0', '1.0', '2.0', '3.0', '3.5', '4.0', '4.5', '5.0'];
+                var stars = Array.from({length: 5}, function(v, k) { return k }).map(function(kind) {
+                  kind += 1;
+                  var icon;
+                  var rating = parseFloat(place.rating);
+                  if (kind <= rating) icon = 'star';
+                  else if (kind <= rating + 0.5) icon = 'star_half';
+                  else icon = 'star_border';
+                  return '<i class="material-icons orange-text">' + icon + '</i>'
+                });
+                var ratingStars = stars.join('');
+              }
+
+            var content = '<div class="info-window-contents"><a href="' + place.url + '" target="_blank">' + imgTag + '<h6>' +
+              place.name + '</h6></a><br>' +
+              '<span class="popup-rating">評価: ' + (ratingStars || "なし")  + '</span></div>';
             infowindow.setContent(content);
             infowindow.open(marker.getMap(), marker);
-
-            // service.getDetails({
-            //   placeId: place.place_id
-            // }, function(place, status) {
-            //   if (status == google.maps.places.PlacesServiceStatus.OK) {
-            //     var content = '<div><a href="' + place.url + '" target="_blank"><strong>' +
-            //       place.name + '</strong></a><br>' +
-            //       place.vicinity + '</div>'
-            //     infowindow.setContent(content);
-            //     infowindow.open(marker.getMap(), marker);
-            //   }
-            // });
           });
 
           markers.push(marker);
@@ -158,14 +166,6 @@ function initMap() {
       map: map,
       title: '現在地'
     });
-
-    // var input = document.getElementById('search-field');
-    // var options = {
-    //   bounds: circle.getBounds(),
-    //   types: ['establishment']
-    // };
-
-    // autocomplete = new google.maps.places.Autocomplete(input, options);
 
     infowindow = new google.maps.InfoWindow({
       pixelOffset: new google.maps.Size(-25, 0)
