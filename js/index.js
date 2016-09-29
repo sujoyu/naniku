@@ -181,6 +181,20 @@ function initMap() {
       pixelOffset: new google.maps.Size(-25, 0)
     });
     document.getElementById('search-submit').click();
+
+    document.getElementById('search-gurnavi').addEventListener('click', function(e) {
+      this.href = 'http://r.gnavi.co.jp/area/jp/rsmap/' +
+        '?sc_lid=map_link#&lt=' + geolocation.lat + '&ln=' + geolocation.lng +
+        '&st=geo&zoom=16&c=all' +
+        '&fw=' + (document.getElementById('search-field').value || document.getElementById('category-field').value);
+    });
+
+    document.getElementById('search-tabelog').addEventListener('click', function(e) {
+      this.href = 'https://tabelog.com/rst/rstmap' +
+        '?clat=' + geolocation.lat + '&clon=' + geolocation.lng +
+        '&lz=1' +
+        '&sw=' + (document.getElementById('search-field').value || document.getElementById('category-field').value);
+    });
   });
 
   function offsetCenter(latlng, offsetx, offsety) {

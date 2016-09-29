@@ -67,19 +67,32 @@
         <ul id="option-accordion" class="collapsible" data-collapsible="accordion">
           <li>
             <div class="collapsible-header teal-text">検索オプション</div>
-            <div id="option-body" class="collapsible-body white"><form id="option-form" class="row">
-              <div class="input-field col s12">
-                <input placeholder="キーワード" id="search-field" type="text">
-                <label for="search-field">キーワード</label>
+            <div id="option-body" class="collapsible-body white">
+              <form id="option-form" class="row">
+                <div class="input-field col s12">
+                  <input placeholder="キーワード" id="search-field" type="text">
+                  <label for="search-field">キーワード</label>
+                </div>
+                <div class="switch">
+                  <label>
+                    <input id="check-open-now" type="checkbox" checked>
+                    <span class="lever"></span>
+                    現在営業中の店舗
+                  </label>
+                </div>
+              </form>
+              <div class="row">
+                <div class="col s12">
+                  同じ条件で、
+                </div>
+                <p class="col s12">
+                  <a id="search-tabelog" class="" href="#">食べログ検索</a>
+                </p>
+                <p class="col s12">
+                  <a id="search-gurnavi" class="" href="#">ぐるなび検索</a>
+                </p>
               </div>
-              <div class="switch">
-                <label>
-                  <input id="check-open-now" type="checkbox" checked>
-                  <span class="lever"></span>
-                  現在営業中の店舗
-                </label>
-              </div>
-            </form></div>
+            </div>
           </li>
         </ul>
       </div>
