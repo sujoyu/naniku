@@ -168,8 +168,8 @@ function initMap() {
 
   navigator.geolocation.getCurrentPosition(function(position) {
     var geolocation = {
-      lat: 35.6834691,//position.coords.latitude,
-      lng: 139.7605198//position.coords.longitude
+      lat: /*35.6834691,*/position.coords.latitude,
+      lng: /*139.7605198*/position.coords.longitude
     };
     latLng = new google.maps.LatLng(geolocation.lat, geolocation.lng);//position.coords.latitude, position.coords.longitude);
     circle.setOptions({
