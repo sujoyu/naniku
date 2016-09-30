@@ -17,21 +17,14 @@ html, body { height: 100%; margin: 0; padding: 0; }
 #search-panel .select-dropdown {
 	margin-bottom: 5px;
 }
-#submit-wrapper {
-	padding-top: 0;
-}
-#submit-wrapper .right {
-	height: 1rem;
-	width: 1rem;
-	position: relative;
-	overflow: visible;
-}
 #search-random {
 	position: absolute;
-	top: -1.25rem;
-	right: -1rem;
+	bottom: 1rem;
+	left: 50%;
 	width: 7rem;
 	height: 7rem;
+	margin-left: -3.5rem;
+	line-height: 7rem;
 	border-radius: 5rem;
 }
 #search-submit {
@@ -43,7 +36,10 @@ html, body { height: 100%; margin: 0; padding: 0; }
 #option-body {
 	padding: 15px 15px;
 }
-#search-gurnavi, #search-random{
+#option-trigger {
+	padding: 0 1rem;
+}
+#search-gurnavi, #search-random {
 	padding: 0 1rem;
 }
 #map-spinner-wrapper {
@@ -52,6 +48,9 @@ html, body { height: 100%; margin: 0; padding: 0; }
 }
 #map-spinner-wrapper .valign {
 	margin: auto;
+}
+.range-field .thumb.active {
+	z-index: 1;
 }
 .popup-image {
 	float: left;

@@ -1,6 +1,7 @@
 window.addEventListener('load', function() {
   Materialize.updateTextFields();
   $('select').material_select();
+  $('.modal-trigger').leanModal();
 
   var category = document.getElementById('category-field');
   category.disabled = false;
@@ -150,7 +151,7 @@ function initMap() {
         Materialize.toast(msg, 3000);
       }
 
-      offsetCenter(latLng, 0, -100);
+      offsetCenter(latLng, 0, -20);
     });
   });
 
@@ -167,7 +168,8 @@ function initMap() {
 
     map = new google.maps.Map(document.getElementById('map'), {
       center: geolocation,
-      zoom: 16
+      zoom: 16,
+      mapTypeControl: false
     });
 
     var marker = new google.maps.Marker({
