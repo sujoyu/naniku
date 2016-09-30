@@ -85,7 +85,7 @@ function initMap() {
     service = new google.maps.places.PlacesService(map);
     service.nearbySearch({
       location: latLng,
-      radius: document.getElementById('radius-field').value,
+      radius: parseInt(document.getElementById('radius-field').value) - 200,
       keyword: document.getElementById('search-field').value || document.getElementById('category-field').value,
       type: types,
       openNow: !!checkOpenNow.checked
@@ -155,22 +155,39 @@ function initMap() {
     });
   });
 
+  var circle = new google.maps.Circle({
+    fillColor:"#03a9f4",
+    fillOpacity: 0.1,
+    strokeColor:'#1e88e5',
+    strokeOpacity:0.3
+  });
+  var radiusField = document.getElementById('radius-field');
+  radiusField.addEventListener('change', function(e) {
+    circle.setRadius(parseInt(this.value));
+  });
+
   navigator.geolocation.getCurrentPosition(function(position) {
     var geolocation = {
-      lat: position.coords.latitude,
-      lng: position.coords.longitude
+      lat: 35.6834691,//position.coords.latitude,
+      lng: 139.7605198//position.coords.longitude
     };
-    latLng = new google.maps.LatLng(position.coords.latitude, position.coords.longitude);
-    var circle = new google.maps.Circle({
-      center: geolocation,
-      radius: position.coords.accuracy
+    latLng = new google.maps.LatLng(geolocation.lat, geolocation.lng);//position.coords.latitude, position.coords.longitude);
+    circle.setOptions({
+        center: geolocation,
+        radius: parseInt(radiusField.value)
     });
+    // var circle = new google.maps.Circle({
+    //   center: geolocation,
+    //   radius: position.coords.accuracy
+    // });
 
     map = new google.maps.Map(document.getElementById('map'), {
       center: geolocation,
-      zoom: 16,
+      zoom: 15,
       mapTypeControl: false
     });
+
+    circle.setMap(map);
 
     var marker = new google.maps.Marker({
       position: latLng,
