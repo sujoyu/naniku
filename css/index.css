@@ -13,6 +13,8 @@ html, body { height: 100%; margin: 0; padding: 0; }
 #search-panel {
 	padding: 10px 10px;
 	pointer-events: auto;
+	display: flex;
+	align-items: center;
 }
 #search-panel .select-dropdown {
 	margin-bottom: 5px;
@@ -30,6 +32,10 @@ html, body { height: 100%; margin: 0; padding: 0; }
 #search-submit {
 	margin-bottom: 10px;
 }
+#option-wrapper {
+    display: flex;
+    justify-content: center;
+}
 #option-accordion {
 	pointer-events: auto;
 }
@@ -37,7 +43,7 @@ html, body { height: 100%; margin: 0; padding: 0; }
 	padding: 15px 15px;
 }
 #option-trigger {
-	padding: 0 1rem;
+	padding: 0 0;
 }
 #search-gurnavi, #search-random {
 	padding: 0 1rem;
@@ -69,4 +75,14 @@ html, body { height: 100%; margin: 0; padding: 0; }
 }
 .rating-stars {
 
+}
+
+.cf:before,
+.cf:after {
+    content: " ";
+    display: table;
+}
+
+.cf:after {
+    clear: both;
 }

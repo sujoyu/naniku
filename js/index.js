@@ -91,12 +91,14 @@ function initMap() {
       openNow: !!checkOpenNow.checked
     }, function(results, status) {
       if (status == google.maps.places.PlacesServiceStatus.OK) {
+        var nearestDist;
+        var nearestMarker;
         results.forEach(function(place) {
           var image = {
             url: place.icon,
             size: new google.maps.Size(71, 71),
             origin: new google.maps.Point(0, 0),
-            anchor: new google.maps.Point(17, 34),
+            anchor: new google.maps.Point(17, 17),
             scaledSize: new google.maps.Size(25, 25)
           };
 
@@ -106,6 +108,12 @@ function initMap() {
             title: place.name,
             position: place.geometry.location
           });
+
+          var dist = google.maps.geometry.spherical.computeDistanceBetween(latLng, place.geometry.location);
+          if (!nearestMarker || dist < nearestDist) {
+            nearestDist = dist;
+            nearestMarker = marker;
+          }
 
           marker.addListener('click', function() {
             infowindow.close();
@@ -145,6 +153,10 @@ function initMap() {
 
           markers.push(marker);
         });
+        if (nearestMarker) {
+          google.maps.event.trigger(nearestMarker, 'click');
+        }
+
         Materialize.toast("検索完了。", 1000);
       } else {
         var msg = errorMessages[status];
@@ -159,7 +171,8 @@ function initMap() {
     fillColor:"#03a9f4",
     fillOpacity: 0.1,
     strokeColor:'#1e88e5',
-    strokeOpacity:0.3
+    strokeOpacity:0.3,
+    strokeWeight: 1
   });
   var radiusField = document.getElementById('radius-field');
   radiusField.addEventListener('change', function(e) {
@@ -168,18 +181,14 @@ function initMap() {
 
   navigator.geolocation.getCurrentPosition(function(position) {
     var geolocation = {
-      lat: /*35.6834691,*/position.coords.latitude,
-      lng: /*139.7605198*/position.coords.longitude
+      lat: position.coords.latitude,
+      lng: position.coords.longitude
     };
-    latLng = new google.maps.LatLng(geolocation.lat, geolocation.lng);//position.coords.latitude, position.coords.longitude);
+    latLng = new google.maps.LatLng(geolocation.lat, geolocation.lng);
     circle.setOptions({
         center: geolocation,
-        radius: parseInt(radiusField.value)
+        radius: parseInt(radiusField.value),
     });
-    // var circle = new google.maps.Circle({
-    //   center: geolocation,
-    //   radius: position.coords.accuracy
-    // });
 
     map = new google.maps.Map(document.getElementById('map'), {
       center: geolocation,
