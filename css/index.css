@@ -2,7 +2,7 @@ html, body { height: 100%; margin: 0; padding: 0; }
 #map { height: 100%; }
 #search-wrapper {
 	position: absolute;
-	top: 10px;
+	top: -20px;
 	left: 0;
 	right: 0;
 	bottom: 0;
@@ -11,10 +11,13 @@ html, body { height: 100%; margin: 0; padding: 0; }
 	pointer-events: none;
 }
 #search-panel {
-	padding: 10px 10px;
+	margin: 0;
+	padding: 30px 10px 10px;
 	pointer-events: auto;
 	display: flex;
 	align-items: center;
+	border-top-right-radius: 0;
+	border-top-left-radius: 0;
 }
 #search-panel .select-dropdown {
 	margin-bottom: 5px;
