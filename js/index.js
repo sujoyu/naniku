@@ -113,7 +113,6 @@ function initMap() {
             attribution: {
               source: 'なにくう - 近所の食べもの屋さんをしらべよう'
             }
-            //position: place.geometry.location
           });
 
           var dist = google.maps.geometry.spherical.computeDistanceBetween(latLng, place.geometry.location);
@@ -124,7 +123,6 @@ function initMap() {
 
           marker.addListener('click', function() {
             infowindow.close();
-            console.log(place.place_id);
 
             service.getDetails({
               placeId: place.place_id
