@@ -106,7 +106,15 @@ function initMap() {
             map: map,
             icon: image,
             title: place.name,
-            position: place.geometry.location
+            place: {
+              location: place.geometry.location,
+              placeId: place.place_id
+            },
+            attribution: {
+              source: 'なにくう - 近所の食べもの屋さんをしらべよう',
+              webUrl: 'https://sujoyu.github.io/naniku/'
+            }
+            //position: place.geometry.location
           });
 
           var dist = google.maps.geometry.spherical.computeDistanceBetween(latLng, place.geometry.location);
@@ -117,13 +125,14 @@ function initMap() {
 
           marker.addListener('click', function() {
             infowindow.close();
+            console.log(place.place_id);
 
             service.getDetails({
               placeId: place.place_id
             }, function(place, status) {
               if (status == google.maps.places.PlacesServiceStatus.OK) {
-              var imgTag = place.photos && place.photos[0] ? '<img class="popup-image" src="' +
-                place.photos[0].getUrl({'maxWidth': 100, 'maxHeight': 100}) + '"></img>' : '';
+                var imgTag = place.photos && place.photos[0] ? '<img class="popup-image" src="' +
+                  place.photos[0].getUrl({'maxWidth': 100, 'maxHeight': 100}) + '"></img>' : '';
 
                 var ratingStars;
                 if (place.rating) {
@@ -139,16 +148,16 @@ function initMap() {
                   var ratingStars = stars.join('');
                 }
 
-              var content = '<div class="info-window-contents"><a href="' + place.url + '" target="_blank">' + imgTag + '<h6>' +
-                place.name + '</h6></a><br>' +
-                '<span class="popup-rating">評価: ' + (ratingStars || "なし")  + '</span><br></div>';
-              infowindow.setContent(content);
-              infowindow.open(marker.getMap(), marker);
-            } else {
-              var msg = errorMessages[status];
-              Materialize.toast(msg, 3000);
-            }
-          });
+                var content = '<div class="info-window-contents"><a href="' + place.url + '" target="_blank">' + imgTag + '<h6>' +
+                  place.name + '</h6></a><br>' +
+                  '<span class="popup-rating">評価: ' + (ratingStars || "なし")  + '</span><br></div>';
+                infowindow.setContent(content);
+                infowindow.open(marker.getMap(), marker);
+              } else {
+                var msg = errorMessages[status];
+                Materialize.toast(msg, 3000);
+              }
+            });
           });
 
           markers.push(marker);
@@ -188,6 +197,7 @@ function initMap() {
     circle.setOptions({
         center: geolocation,
         radius: parseInt(radiusField.value),
+        clickable: false
     });
 
     map = new google.maps.Map(document.getElementById('map'), {
