@@ -111,8 +111,7 @@ function initMap() {
               placeId: place.place_id
             },
             attribution: {
-              source: 'なにくう - 近所の食べもの屋さんをしらべよう',
-              webUrl: 'https://sujoyu.github.io/naniku/'
+              source: 'なにくう - 近所の食べもの屋さんをしらべよう'
             }
             //position: place.geometry.location
           });
