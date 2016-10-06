@@ -190,6 +190,8 @@ function initMap() {
       lat: position.coords.latitude,
       lng: position.coords.longitude
     };
+    // デモ用
+    //geolocation = { lat: 35.6834691, lng: 139.7605198 };
     latLng = new google.maps.LatLng(geolocation.lat, geolocation.lng);
     circle.setOptions({
         center: geolocation,
