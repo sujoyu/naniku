@@ -3,11 +3,12 @@
     var ios_ua = navigator.userAgent;
     if( ios_ua.indexOf("iPhone") > 0 ) {
       ios_ua.match(/iPhone OS (\w+)/g);
-      var version = RegExp.$1;
+      var version = RegExp.$1.split("_")[0];
       return version;
     }
   }
-  if (ios_ver() === '10_0') {
+  console.log(ios_ver());
+  if (ios_ver() === '10') {
     window.__Touch = window.Touch;
     window.Touch = function(init) {
       this.target = init.target;
